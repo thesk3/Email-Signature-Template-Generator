@@ -37,7 +37,7 @@ const postReducer  = (state = data, action) => {
     //     }
     // }
     case 'ADD_FIRST_NAME':
-        console.log("action1-->",action.data);
+       
         const { firstName, lastName,jobTitle,companyName,department,phoneNumber
          ,officePhone,mobilePhone,website,emailAddress,linkedin,
          facebook,
@@ -48,9 +48,9 @@ const postReducer  = (state = data, action) => {
         
         
         } = action.data;
-        console.log("firstName valid-->",firstName,lastName);
+        
         const val="signature";
-        console.log("state2-->",state);
+       
         return {
             ...state,
             [val]: {

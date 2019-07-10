@@ -43,6 +43,7 @@ class Main extends Component {
                            
                     <label className="email-text">Email Signature Template Generator
                             </label>
+                           
                 </div>
                 </div>
                <EmailSignatuer/>

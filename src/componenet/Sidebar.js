@@ -4,11 +4,22 @@ import FullWidthTabs from './Tab'
 import { connect } from 'react-redux';
 class Sidebar extends Component {
     render() {
-        let Sidebar = 'Sidebar';
-        if (this.props.isToggleOn) {
-            Sidebar += '-hide';
+        let Sidebar="";
+       /// this.props.isToggleOn?'Sidebar-hide':'Sidebar'
+        if (!this.props.isToggleOn) {
+            Sidebar='Sidebar';
         }
+         if (this.props.isToggleOn) {
+            Sidebar='Sidebar-hide';
+         }
+        //var Sidebar = 'Sidebar';
+        // if (this.props.isToggleOn) {
+        //     Sidebar += '-hide';
+        // }
+
+        
         return (
+            
             <div className={Sidebar}  >
                
                 <FullWidthTabs/>
@@ -19,6 +30,7 @@ class Sidebar extends Component {
 }
 
 const mapStateToProps = (state) => {
+    console.log("state in sidebar",state);
     return {
       isToggleOn: state.toggleTab.isToggleOn
     }

@@ -22,7 +22,7 @@ class EmailSignatuer extends Component {
 
     /* Select the text field */
    
-    console.log("copyText in copyToClipboard-->",copyText);
+   
     /* Copy the text inside the text field */
     document.execCommand("copy");
   }
@@ -30,34 +30,50 @@ class EmailSignatuer extends Component {
     // If we have a snapshot value, we've just added new items.
     // Adjust scroll so these new items don't push the old ones out of view.
     // (snapshot here is the value returned from getSnapshotBeforeUpdate)
-    console.log("in emai body value to copy is-->",this.props.copy);
-    //innerHtml from text and outterHtml for source
-    var copyText = document.getElementById("myInput").innerText;
-    const el = document.createElement('textarea');
-    el.value = copyText;
-    document.body.appendChild(el);
-    el.select();
-    document.execCommand('copy');
-    document.body.removeChild(el);
- 
-  
-   
-   
+    
+
+   if(this.props.copy){
+
+
+  var copyText = document.getElementById("myInput").innerHTML;
+  var container = document.createElement('div')
+  container.innerHTML = copyText
+
+  // Hide element
+  // [2]
+  container.style.position = 'fixed'
+  container.style.pointerEvents = 'none'
+  container.style.opacity = 0
+
+  // Detect all style sheets of the page
+  var activeSheets = Array.prototype.slice.call(document.styleSheets)
+    .filter(function (sheet) {
+      return !sheet.disabled
+    })
+
+  // Mount the container to the DOM to make `contentWindow` available
+  // [3]
+  document.body.appendChild(container)
+
+  // Copy to clipboard
+  // [4]
+  window.getSelection().removeAllRanges()
+
+  var range = document.createRange()
+  range.selectNode(container)
+  window.getSelection().addRange(range)
+
+  // [5.1]
+  document.execCommand('copy')
+
   }
+}
 
     render() {
         return (
             
                  <div className="email-signatuer" >
-                   {
-         /* Logical shortcut for only displaying the 
-            button if the copy command exists */
-         document.queryCommandSupported('copy') &&
-          <div>
-            <button onClick={this.copyToClipboard}>Copy</button> 
-            {this.state.copySuccess}
-          </div>
-        }
+               
                  {/* {this.props.posts.map((post,i) => (
                     <div key={i}>
                      <div key={i}>{post.name}</div>
@@ -82,7 +98,7 @@ class EmailSignatuer extends Component {
    <div className="email-body">
    <div className="email-body-inner" id="myInput">
 
-   <table className="first-table"style={{border:'1px solid'}}>
+   <table className="first-table">
        <tbody className="table-body">
   <tr>
     <td style={{    verticalAlign: 'top'}}>
@@ -343,9 +359,7 @@ class EmailSignatuer extends Component {
     }
 }
 const mapStateToProps = (state) => {
-    console.log("state-->",state);
-    console.log("state.copySignature-->",state.copySignature);
-  
+   
     return {
         signature: state.signatureData.signature,
         copy: state.copySignature

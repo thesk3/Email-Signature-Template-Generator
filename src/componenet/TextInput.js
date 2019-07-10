@@ -49,7 +49,7 @@ export default function OutlinedTextFields() {
     currency: 'EUR',
   });
 
-  const handleChange = name => event => {
+  const   handleChange = async name => event => {
       console.log("name-->",name);
     setValues({ ...values, [name]: event.target.value });
   };
@@ -62,6 +62,7 @@ export default function OutlinedTextFields() {
         className={classes.textField}
         value={values.name}
         onChange={handleChange('name')}
+        
         margin="normal"
         variant="outlined"
       />
